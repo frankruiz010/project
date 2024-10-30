@@ -1,0 +1,57 @@
+@charset "utf-8";
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #CCCCCC;
+}
+wrapper {
+    width: 1366px;
+    margin: 0 auto;
+    display: block;
+    background-color: #FFFFFF;
+}
+header {
+    height: 150px;
+    background-color: #999999;
+}
+footer {
+    padding: 16px;
+    font-size: 12px;
+}
+nav {
+    background-color: rgba(0,0,0,0.49);
+}
+nav ul {
+    padding: 0;
+    margin: 0;
+}
+ul a li {
+    display: inline-block;
+    padding: 16px 24px;
+    font-size: 20px;
+    color: #FFFFFF;
+    font-family: sans-serif;
+}
+ul a li:hover  {
+    background-color: #000000;
+}
+header h1 {
+    padding: 20px;
+    margin: 0;
+}
+.poster {
+    margin-right: 10px;
+}
+.merch {
+    width: 400px;
+    height: auto;
+    margin-right: 10px;
+}
+main img   {
+    width: 100%;
+    height: auto;
+}
+main iframe {
+    width: 100%;
+    height: 800px;
+}
