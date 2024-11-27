@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<!-- Created with Ai->Canvas Export Plug-In Version 1.8 (PC/64) -->
+<!-- By Mike Swanson (http://blog.mikeswanson.com/)             -->
+
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>clock</title>
+  <script src="Ai2CanvasAnimation.js"></script>
+  <script>
+
+    // Main canvas and context references
+    var canvas;
+    var ctx;
+
+    // Frames per second
+    var fps = 60.0;
+
+    // Animations
+    var animations = [ new mousePath() ];
+
+    function mousePath() {
+
+      // Control and anchor points
+      this.points = [
+                    [ [268.2, 122.6], [310.1, 102.0], [331.1, 91.7], [349.5, 94.5] ],
+                    [ [349.5, 94.5], [378.7, 98.9], [400.4, 121.9], [437.1, 181.3] ],
+                    [ [437.1, 181.3], [463.0, 223.2], [496.7, 283.6], [528.7, 362.3] ],
+                    [ [528.7, 362.3], [500.0, 391.8], [448.3, 437.1], [371.5, 467.5] ],
+                    [ [371.5, 467.5], [321.0, 487.5], [275.3, 494.9], [241.5, 497.5] ],
+                    [ [241.5, 497.5], [209.5, 471.1], [169.9, 433.3], [132.0, 382.0] ],
+                    [ [132.0, 382.0], [94.4, 331.1], [69.9, 282.7], [54.0, 244.5] ],
+                    [ [54.0, 244.5], [88.8, 247.6], [116.5, 215.7], [146.0, 197.6] ],
+                    [ [146.0, 197.6], [188.2, 171.6], [220.1, 146.1], [268.2, 122.6] ]
+                    ];
+
+      // Linear motion index
+      this.linear = [
+                    [0, 0.00, 0.00], [0, 0.45, 0.04], [1, 0.15, 0.08], [1, 0.63, 0.12], 
+                    [1, 0.94, 0.15], [2, 0.23, 0.19], [2, 0.50, 0.23], [2, 0.73, 0.27], 
+                    [2, 0.94, 0.31], [3, 0.25, 0.35], [3, 0.53, 0.38], [3, 0.77, 0.42], 
+                    [3, 0.98, 0.46], [4, 0.30, 0.50], [4, 0.67, 0.54], [5, 0.10, 0.58], 
+                    [5, 0.45, 0.62], [5, 0.75, 0.65], [6, 0.03, 0.69], [6, 0.30, 0.73], 
+                    [6, 0.62, 0.77], [6, 0.98, 0.81], [7, 0.47, 0.85], [7, 0.93, 0.88], 
+                    [8, 0.30, 0.92], [8, 0.66, 0.96], [8, 1.00, 1.00]
+                    ];
+
+      // Segment T boundaries
+      this.segmentT = [0.07, 0.16, 0.32, 0.46, 0.57, 0.69, 0.81, 0.89, 1.00];
+
+      this.lastValue = -1.0;
+      this.x = 0;
+      this.y = 0;
+      this.orientation = 0.0;
+      this.pathClock = new clock(5.00, 0.00, 1, false, 0, linear, this.linear.length - 1, 1.00, 0.0000);
+
+      // Update function
+      this.update = updatePath;
+    }
+
+    function init() {
+
+      // Set main canvas and context references
+      canvas = document.getElementById("canvas");
+      ctx = canvas.getContext("2d");
+
+      // Initialize animations
+      second.rotateClock = new clock(1.00, 0.00, 1, false, 0, linear, 2.0 * Math.PI, 1.00, 0.0000);
+      hour.rotateClock = new clock(270.00, 0.00, 1, false, 0, linear, 2.0 * Math.PI, 1.00, 0.0000);
+      minute.rotateClock = new clock(60.00, 0.00, 1, false, 0, linear, 2.0 * Math.PI, 1.00, 0.0000);
+      pikachu.followOrientation = 0.00 * Math.PI / 180.0;
+
+      // Start animation clocks
+      animations[0].pathClock.start();
+      second.rotateClock.start();
+      hour.rotateClock.start();
+      minute.rotateClock.start();
+
+      // Set animation timer
+      setInterval(drawFrame, (1000 / fps));
+    }
+
+    function updateAnimations() {
+
+      // Update animation clocks
+      updateAllClocks();
+
+      // Update animation paths  
+      var animationCount = animations.length;
+      for (var i = 0; i < animationCount; i++) {
+        animations[i].update();
+      }
+    }
+
+    function drawFrame() {
+
+      // Update animations
+      updateAnimations();
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      face(ctx);
+
+      ctx.save();
+      ctx.translate(300.5, 300.5);
+      ctx.rotate(second.rotateClock.value);
+      second(ctx);
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(300.5, 300.5);
+      ctx.rotate(hour.rotateClock.value);
+      hour(ctx);
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(300.5, 300.5);
+      ctx.rotate(minute.rotateClock.value);
+      minute(ctx);
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(animations[0].x, animations[0].y);
+      ctx.rotate(pikachu.followOrientation + animations[0].orientation);
+      pikachu(ctx);
+      ctx.restore();
+    }
+
+    function face(ctx) {
+
+      var gradient;
+
+      // face/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(600.5, 300.5);
+      ctx.bezierCurveTo(600.5, 466.2, 466.2, 600.5, 300.5, 600.5);
+      ctx.bezierCurveTo(134.8, 600.5, 0.5, 466.2, 0.5, 300.5);
+      ctx.bezierCurveTo(0.5, 134.8, 134.8, 0.5, 300.5, 0.5);
+      ctx.bezierCurveTo(466.2, 0.5, 600.5, 134.8, 600.5, 300.5);
+      ctx.closePath();
+      gradient = ctx.createRadialGradient(300.5, 300.5, 0.0, 300.5, 300.5, 300.0);
+      gradient.addColorStop(0.00, "rgb(255, 255, 255)");
+      gradient.addColorStop(1.00, "rgb(188, 188, 188)");
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      ctx.stroke();
+
+      // face/12
+      ctx.font = "72.0px 'Onyx'";
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fillText("12", 283.7, 81.6);
+
+      // face/11
+      ctx.fillText("11", 164.8, 113.5);
+
+      // face/10
+      ctx.fillText("10", 73.3, 201.9);
+
+      // face/9
+      ctx.fillText("9", 48.0, 323.0);
+
+      // face/8
+      ctx.fillText("8", 80.0, 444.3);
+
+      // face/7
+      ctx.fillText("7", 168.3, 533.4);
+
+      // face/6
+      ctx.fillText("6", 289.4, 566.4);
+
+      // face/5
+      ctx.fillText("5", 410.7, 534.4);
+
+      // face/4
+      ctx.fillText("4", 499.8, 446.0);
+
+      // face/3
+      ctx.fillText("3", 532.8, 325.0);
+
+      // face/2
+      ctx.fillText("2", 500.8, 203.6);
+
+      // face/1
+      ctx.fillText("1", 414.9, 114.5);
+      ctx.restore();
+    }
+
+    function second(ctx) {
+
+      // second/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-16.5, 0.0);
+      ctx.lineTo(0.0, -242.0);
+      ctx.lineTo(16.5, 0.0);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function hour(ctx) {
+
+      // hour/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-16.5, 0.0);
+      ctx.lineTo(0.0, -161.0);
+      ctx.lineTo(16.5, 0.0);
+      ctx.lineTo(-16.5, 0.0);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(0, 0, 255)";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function minute(ctx) {
+
+      // minute/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-16.5, 0.0);
+      ctx.lineTo(0.0, -196.0);
+      ctx.lineTo(16.5, 0.0);
+      ctx.lineTo(-16.5, 0.0);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(101, 44, 144)";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function pikachu(ctx) {
+
+      // pikachu/Group
+      ctx.save();
+
+      // pikachu/Group/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-72.5, -45.1);
+      ctx.bezierCurveTo(-72.5, -45.1, -68.6, -76.7, -64.7, -76.7);
+      ctx.bezierCurveTo(-60.8, -76.7, -25.2, -35.2, -25.2, -35.2);
+      ctx.lineTo(-31.5, -19.6);
+      ctx.lineTo(-22.0, -9.3);
+      ctx.lineTo(-31.2, 0.3);
+      ctx.lineTo(-25.9, 3.6);
+      ctx.bezierCurveTo(-25.9, 3.6, -18.0, -9.7, 0.1, -10.0);
+      ctx.bezierCurveTo(0.1, -10.0, -25.2, -34.5, -24.5, -44.0);
+      ctx.bezierCurveTo(-23.8, -53.5, 28.1, -12.3, 23.2, -10.8);
+      ctx.bezierCurveTo(23.2, -10.8, 43.3, -12.7, 46.5, -10.8);
+      ctx.bezierCurveTo(49.7, -8.9, 34.5, -49.7, 44.7, -60.8);
+      ctx.bezierCurveTo(44.7, -60.8, 62.0, -41.7, 62.0, -3.2);
+      ctx.bezierCurveTo(62.0, -3.2, 76.5, 15.1, 62.0, 31.6);
+      ctx.bezierCurveTo(62.0, 31.6, 69.8, 25.1, 61.7, 39.9);
+      ctx.bezierCurveTo(61.7, 39.9, 64.2, 33.1, 72.3, 36.9);
+      ctx.bezierCurveTo(72.3, 36.9, 74.4, 39.6, 66.3, 45.7);
+      ctx.bezierCurveTo(66.3, 45.7, 57.1, 51.8, 56.7, 50.6);
+      ctx.bezierCurveTo(56.4, 49.5, 53.2, 63.2, 53.2, 63.2);
+      ctx.lineTo(51.6, 66.3);
+      ctx.lineTo(53.6, 69.0);
+      ctx.lineTo(50.4, 69.0);
+      ctx.lineTo(50.7, 71.6);
+      ctx.lineTo(47.9, 69.5);
+      ctx.lineTo(46.9, 71.6);
+      ctx.lineTo(43.9, 69.3);
+      ctx.lineTo(43.5, 72.6);
+      ctx.lineTo(38.4, 69.5);
+      ctx.lineTo(37.8, 72.6);
+      ctx.lineTo(35.6, 70.9);
+      ctx.lineTo(35.0, 74.1);
+      ctx.lineTo(32.0, 72.2);
+      ctx.lineTo(31.7, 76.0);
+      ctx.lineTo(29.2, 73.1);
+      ctx.bezierCurveTo(29.2, 73.1, 27.8, 76.0, 25.8, 75.1);
+      ctx.bezierCurveTo(23.9, 74.1, 2.7, 57.1, -0.2, 47.8);
+      ctx.bezierCurveTo(-0.2, 47.8, 4.7, 67.2, -8.6, 57.1);
+      ctx.bezierCurveTo(-21.8, 47.0, -21.8, 47.0, -21.8, 47.0);
+      ctx.bezierCurveTo(-21.8, 47.0, -23.8, 42.0, -22.7, 42.0);
+      ctx.bezierCurveTo(-21.6, 42.0, -29.7, 29.0, -29.1, 15.5);
+      ctx.lineTo(-33.3, 14.6);
+      ctx.lineTo(-29.1, 9.4);
+      ctx.lineTo(-40.4, 3.6);
+      ctx.lineTo(-32.1, -6.8);
+      ctx.lineTo(-42.1, -14.2);
+      ctx.lineTo(-39.1, -21.9);
+      ctx.lineTo(-72.5, -45.1);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(255, 244, 30)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/lines
+
+      // pikachu/Group/lines/Path
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-29.1, 15.5);
+      ctx.bezierCurveTo(-28.8, 13.9, -28.5, 12.0, -28.0, 10.0);
+      ctx.bezierCurveTo(-27.4, 7.5, -26.6, 5.4, -25.9, 3.6);
+      ctx.stroke();
+
+      // pikachu/Group/lines/Line
+      ctx.beginPath();
+      ctx.moveTo(33.6, 42.8);
+      ctx.lineTo(38.4, 69.5);
+      ctx.stroke();
+
+      // pikachu/Group/lines/Line
+      ctx.beginPath();
+      ctx.moveTo(59.0, 34.4);
+      ctx.lineTo(56.2, 51.7);
+      ctx.stroke();
+
+      // pikachu/Group/lines/Path
+      ctx.beginPath();
+      ctx.moveTo(7.1, 29.6);
+      ctx.bezierCurveTo(9.2, 32.0, 18.2, 41.7, 32.8, 42.8);
+      ctx.bezierCurveTo(49.2, 44.0, 60.2, 33.4, 62.0, 31.6);
+      ctx.stroke();
+
+      // pikachu/Group/lines/Path
+      ctx.beginPath();
+      ctx.moveTo(0.1, -10.0);
+      ctx.bezierCurveTo(1.0, -9.1, 1.9, -8.1, 3.1, -7.2);
+      ctx.bezierCurveTo(6.6, -4.2, 10.3, -2.6, 13.0, -1.8);
+      ctx.stroke();
+
+      // pikachu/Group/lines/Path
+      ctx.beginPath();
+      ctx.moveTo(46.5, -10.8);
+      ctx.bezierCurveTo(49.0, -10.1, 52.0, -9.0, 55.3, -7.2);
+      ctx.bezierCurveTo(58.5, -5.4, 61.0, -3.5, 63.0, -1.8);
+      ctx.stroke();
+
+      // pikachu/Group/Cheek2
+      ctx.restore();
+      ctx.beginPath();
+      ctx.moveTo(22.8, 26.8);
+      ctx.bezierCurveTo(22.8, 32.0, 20.2, 36.2, 16.8, 36.2);
+      ctx.bezierCurveTo(13.5, 36.2, 10.8, 32.0, 10.8, 26.8);
+      ctx.bezierCurveTo(10.8, 21.6, 13.5, 17.4, 16.8, 17.4);
+      ctx.bezierCurveTo(20.2, 17.4, 22.8, 21.6, 22.8, 26.8);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(200, 0, 0)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(66.1, 26.2);
+      ctx.bezierCurveTo(65.3, 28.0, 63.4, 31.3, 62.0, 30.9);
+      ctx.bezierCurveTo(60.7, 30.6, 59.9, 26.5, 61.1, 23.4);
+      ctx.bezierCurveTo(62.3, 20.4, 65.6, 18.2, 66.8, 19.0);
+      ctx.bezierCurveTo(68.1, 19.9, 67.1, 23.9, 66.1, 26.2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Ellipse
+      ctx.beginPath();
+      ctx.moveTo(30.0, 6.7);
+      ctx.bezierCurveTo(30.0, 9.8, 27.6, 12.4, 24.7, 12.4);
+      ctx.bezierCurveTo(21.8, 12.4, 19.5, 9.8, 19.5, 6.7);
+      ctx.bezierCurveTo(19.5, 3.6, 21.8, 1.0, 24.7, 1.0);
+      ctx.bezierCurveTo(27.6, 1.0, 30.0, 3.6, 30.0, 6.7);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Ellipse
+      ctx.beginPath();
+      ctx.moveTo(29.4, 5.0);
+      ctx.bezierCurveTo(29.4, 6.6, 28.2, 7.9, 26.8, 7.9);
+      ctx.bezierCurveTo(25.4, 7.9, 24.3, 6.6, 24.3, 5.0);
+      ctx.bezierCurveTo(24.3, 3.5, 25.4, 2.2, 26.8, 2.2);
+      ctx.bezierCurveTo(28.2, 2.2, 29.4, 3.5, 29.4, 5.0);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(255, 255, 255)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Ellipse
+      ctx.beginPath();
+      ctx.moveTo(64.2, 6.1);
+      ctx.bezierCurveTo(64.2, 8.9, 62.1, 11.2, 59.5, 11.2);
+      ctx.bezierCurveTo(56.9, 11.2, 54.7, 8.9, 54.7, 6.1);
+      ctx.bezierCurveTo(54.7, 3.3, 56.9, 1.0, 59.5, 1.0);
+      ctx.bezierCurveTo(62.1, 1.0, 64.2, 3.3, 64.2, 6.1);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fill();
+
+      // pikachu/Group/Ellipse
+      ctx.beginPath();
+      ctx.moveTo(63.9, 5.0);
+      ctx.bezierCurveTo(63.9, 6.6, 62.8, 7.9, 61.4, 7.9);
+      ctx.bezierCurveTo(60.0, 7.9, 58.8, 6.6, 58.8, 5.0);
+      ctx.bezierCurveTo(58.8, 3.5, 60.0, 2.2, 61.4, 2.2);
+      ctx.bezierCurveTo(62.8, 2.2, 63.9, 3.5, 63.9, 5.0);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(255, 255, 255)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/spot 1
+      ctx.beginPath();
+      ctx.moveTo(-21.6, 6.9);
+      ctx.bezierCurveTo(-22.3, 11.1, -22.6, 13.1, -23.1, 13.2);
+      ctx.bezierCurveTo(-24.5, 13.5, -27.7, 6.9, -25.9, 3.5);
+      ctx.bezierCurveTo(-25.4, 2.6, -24.9, 2.5, -23.1, 0.0);
+      ctx.bezierCurveTo(-21.6, -1.9, -21.3, -2.7, -21.0, -2.6);
+      ctx.bezierCurveTo(-20.2, -2.3, -21.0, 2.7, -21.6, 6.9);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(94, 66, 0)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/spot 2
+      ctx.beginPath();
+      ctx.moveTo(-10.0, -4.0);
+      ctx.bezierCurveTo(-10.6, 2.2, -11.0, 5.6, -9.6, 6.3);
+      ctx.bezierCurveTo(-8.8, 6.7, -7.9, 6.1, -7.5, 5.8);
+      ctx.bezierCurveTo(-5.3, 4.5, -5.5, 1.8, -4.1, -2.0);
+      ctx.bezierCurveTo(-2.2, -7.1, 0.8, -9.1, 0.1, -10.0);
+      ctx.bezierCurveTo(-0.2, -10.5, -0.8, -10.1, -4.9, -9.6);
+      ctx.bezierCurveTo(-7.3, -9.3, -7.8, -9.3, -8.5, -8.8);
+      ctx.bezierCurveTo(-9.4, -8.0, -9.7, -6.8, -10.0, -4.0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(-22.9, 42.0);
+      ctx.lineTo(-20.7, 42.0);
+      ctx.bezierCurveTo(-20.7, 42.0, -22.6, 42.2, -21.8, 37.7);
+      ctx.bezierCurveTo(-21.8, 37.7, -20.9, 35.6, -18.1, 38.6);
+      ctx.bezierCurveTo(-18.1, 38.6, -19.2, 33.7, -11.8, 38.6);
+      ctx.bezierCurveTo(-4.3, 43.6, -0.2, 47.6, -0.2, 47.6);
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(39.1, 17.4);
+      ctx.bezierCurveTo(39.1, 17.4, 39.1, 37.7, 43.0, 36.2);
+      ctx.bezierCurveTo(46.9, 34.8, 54.1, 21.6, 52.1, 17.4);
+      ctx.bezierCurveTo(52.1, 17.4, 41.0, 18.4, 39.1, 17.4);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(255, 9, 119)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(36.0, 16.3);
+      ctx.bezierCurveTo(38.3, 17.0, 41.3, 17.7, 44.9, 17.8);
+      ctx.bezierCurveTo(49.3, 18.0, 52.9, 17.4, 55.5, 16.7);
+      ctx.stroke();
+
+      // pikachu/Group/tongue
+      ctx.beginPath();
+      ctx.moveTo(40.0, 25.4);
+      ctx.bezierCurveTo(40.0, 25.4, 46.8, 25.5, 46.5, 31.7);
+      ctx.lineTo(46.1, 33.7);
+      ctx.bezierCurveTo(46.1, 33.7, 42.6, 36.6, 42.1, 36.2);
+      ctx.bezierCurveTo(41.7, 35.8, 39.9, 34.5, 40.0, 25.4);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(252, 158, 255)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Ellipse
+      ctx.beginPath();
+      ctx.moveTo(49.3, 11.7);
+      ctx.bezierCurveTo(49.3, 12.3, 48.7, 12.9, 47.9, 12.9);
+      ctx.bezierCurveTo(47.1, 12.9, 46.5, 12.3, 46.5, 11.7);
+      ctx.bezierCurveTo(46.5, 11.1, 47.1, 10.6, 47.9, 10.6);
+      ctx.bezierCurveTo(48.7, 10.6, 49.3, 11.1, 49.3, 11.7);
+      ctx.closePath();
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(-24.6, -45.0);
+      ctx.bezierCurveTo(-24.6, -45.0, -23.1, -29.9, -3.8, -14.9);
+      ctx.bezierCurveTo(-3.8, -14.9, -6.1, -34.7, -4.9, -35.8);
+      ctx.bezierCurveTo(-3.7, -36.9, -23.8, -47.4, -24.6, -45.0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // pikachu/Group/Path
+      ctx.beginPath();
+      ctx.moveTo(43.9, -26.1);
+      ctx.bezierCurveTo(43.9, -26.1, 39.2, -56.5, 43.9, -60.4);
+      ctx.bezierCurveTo(43.9, -60.4, 47.6, -62.1, 54.4, -43.2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.restore();
+    }
+  </script>
+ </head>
+ <body onload="init()">
+   <canvas id="canvas" width="601" height="601"></canvas>
+ </body>
+</html>
