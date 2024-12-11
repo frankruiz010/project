@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Gables Travel | Francisco Ruiz. 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Vesper+Libre:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style type="text/css">
+body {
+    padding: 0;
+    margin: 0;
+    background-image: url(coralgables.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #9F6C4A;
+	font-family: "Inter", serif;
+}
+header {
+    background-color: #FFFFFF;
+}
+.logo {
+    height: 75px;
+    width: auto;
+    margin-left: 32px;
+}
+wrapper {
+    width: 1366px;
+    margin: 32px auto;
+    display: block;
+    border-radius: 16px;
+    background-color: rgba(0,0,0,0.50);
+}
+#Tabs1 ul {
+    background-image: none;
+    border: none;
+    background-color: transparent;
+}
+#Tabs1 {
+    background-image: none;
+    border: none;
+    background-color: transparent;
+}
+#Tabs1 li {
+    background-image: none;
+    background-color: rgba(255,255,255,0.25);
+    margin: 8px;
+    text-align: center;
+    border-width: thin;
+    border-radius: 8px;
+    border-style: solid;
+}
+#Tabs1 li:hover {
+    background-color: rgba(68,69,150,0.80);
+}
+#Tabs1 a {
+    color: rgba(255,255,255,1.00);
+}
+#Tabs1 a:hover {
+    color: rgba(241,127,0,1.00);
+}
+input  {
+    width: 48%;
+    padding: 8px;
+    margin-right: 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+}
+.submit  {
+    margin: auto;
+    display: block;
+    background-color: rgba(207,109,224,1.00);
+    width: 33%;
+}
+</style>
+<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<script src="jQueryAssets/jquery-1.11.1.min.js"></script>
+<script src="jQueryAssets/jquery.ui-1.10.4.tabs.min.js"></script>
+</head>
+
+<body>
+<header><img src="gablestravel.jpg" alt="" width="447" height="120" class="logo"></header>
+<wrapper>
+  <div id="Tabs1">
+    <ul>
+      <li><a href="#tabs-1"><img src="airplane.png" alt="" width="67" height="50"><br>
+      Flights</a></li>
+      <li><a href="#tabs-2"><img src="train.png" alt="" width="67" height="50"><br>
+      Trains</a></li>
+      <li><a href="#tabs-3"><img src="car.png" alt="" width="67" height="50"><br>
+      Cars</a></li>
+      <li><a href="#tabs-4"><img src="cruise.png" alt="" width="67" height="50"><br>
+      Cruises</a></li>
+      <li><a href="#tabs-5"><img src="map.png" alt="" width="67" height="50"><br>
+      Things To Do</a></li>
+</ul>
+<div id="tabs-1">
+      <input type="text" placeholder="Leaving from"><input type="text" placeholder="Going to"><br>
+<input type="date"><input type="date">
+<input type="submit" class="submit">
+    </div>
+    <div id="tabs-2">
+      <input type="text" placeholder="Leaving from">
+      <input type="text" placeholder="Going to">
+      <br>
+      <input type="date">
+      <input type="date">
+      <input type="submit" class="submit">
+    </div>
+    <div id="tabs-3">
+      <input type="text" placeholder="Leaving from">
+      <input type="text" placeholder="Going to">
+      <br>
+      <input type="date">
+      <input type="date">
+      <input type="submit" class="submit">
+    </div>
+    <div id="tabs-4">
+      <input type="text" placeholder="Leaving from">
+      <input type="text" placeholder="Going to">
+      <br>
+      <input type="date">
+      <input type="date">
+      <input type="submit" class="submit">
+    </div>
+    <div id="tabs-5">
+      <input type="text" placeholder="Leaving from">
+      <input type="text" placeholder="Going to">
+      <br>
+      <input type="date">
+      <input type="date">
+      <input type="submit" class="submit">
+    </div>
+  </div>
+</wrapper>
+<script type="text/javascript">
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+</script>
+</body>
+</html>
