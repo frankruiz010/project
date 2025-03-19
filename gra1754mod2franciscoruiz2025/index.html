@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Media Queries Practice | Francisco Ruiz, 2025</title>
+<style type="text/css">
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #00FFFF;
+}
+wrapper {
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+}
+div, section {
+    background-color: purple;
+    margin-top: 1vh;
+    margin-right: 1vh;
+    margin-left: 1vh;
+    margin-bottom: 3vh;
+}
+div img , section img{
+    width: 100%;
+    height: auto;
+}
+h1 {
+    color: #FFFFFF;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+}
+
+@media (min-width:32em){
+body {
+    background-color: #FF9900;
+}
+div {
+    width: 42vw;
+    margin: 12px;
+    display: inline-block;
+}
+wrapper {
+    text-align: center;
+}
+}
+
+@media (min-width:64em){
+body {
+    background-color: #00FF00;
+}
+div {
+    width: 30%;
+}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>D.I.Y. Nike Air Force 1&nbsp; &nbsp;</h1>
+</header>
+<wrapper>
+  <section><img src="sneaker1.1.png" alt="" width="1000" height="730">Content for New div Tag Goes Here</section>
+  <div><img src="sneaker2.1.png" alt="" width="500" height="500">Content for New div Tag Goes Here</div>
+  <div><img src="sneaker3.1.png" alt="" width="500" height="500">Content for New div Tag Goes Here</div>
+  <div><img src="sneaker4.1.png" alt="" width="500" height="500">Content for New div Tag Goes Here</div>
+  <div><img src="sneaker5.1.png" alt="" width="500" height="500">Content for New div Tag Goes Here</div>
+  <footer>© 2025, Francisco Ruiz
+This is a fictitious web page created solely for the purpose of education and training. All products and people associated with this web page are also fictitious. Any resemblance to real brands, products, or people is purely coincidental. Information provided about the product is also fictitious and should not be construed to be representative of actual products on the market in a similar product category.</footer>
+</wrapper>
+</body>
+</html>
