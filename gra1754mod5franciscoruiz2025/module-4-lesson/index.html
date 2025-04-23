@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Responsive Images Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<script src="js/picturefill.js"></script>
+<script src="js/matchmedia.js"></script>
+<style type="text/css">
+
+body {
+	padding: 0;
+	margin: 0;
+	background-image: url("images/restaurant-background-small.jpg");
+	background-size: cover;
+	background-color: #005dbc;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+header {
+    background-color: #FFFFFF;
+}
+p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px;
+    box-shadow: 0px 0px;
+}
+ul {
+    margin-right: 5;
+    margin-left: 5;
+    margin-bottom: 5;
+    display: inline-block;
+}
+li {
+    text-align: center;
+}
+div {
+    background-color: white;
+    margin: auto;
+    width: 500px;
+}
+#steak img  {
+    width: 100%;
+    height: auto;
+}
+.logo {
+    display: block;
+}
+h2 {
+    padding: 5px;
+    margin: 0;
+    text-align: center;
+}
+
+@media (min-width:40em){
+body {
+    background-image: url("images/restaurant-background-medium.jpg");
+}
+body div {
+    margin: auto;
+    width: 90%;
+}
+ul li {
+    padding: 0 20px;
+    display: inline-block;
+}
+.logo {
+    display: inline-block;
+}
+}
+
+@media (min-width:64em){
+body {
+    background-image: url("images/restaurant-background-large.jpg");
+}
+}
+</style>
+</head>
+
+<body>
+<header>  <img src="images/berns-logo.png" alt="" width="398" height="196" class="logo">
+  <ul>
+    <li style="width: auto">Menu</li>
+    <li>Locations</li>
+	<li>Reviews</li>
+	<li>FAQ</li>
+	<li>About</li>
+  </ul> 
+</header>
+<div>
+<picture id="steak"> 
+   
+   <div data-picture data-alt="steak bistro">
+     <div data-src="images/steak-small.jpg"></div>
+     <div data-src="images/steak-medium.jpg" data-media="(min-width: 40em)"></div>
+     <div data-src="images/steak-large.jpg" data-media="(min-width: 64em)"></div>
+     <noscript>
+       <img src="images/steak-small.jpg" id="steak2" alt="steak-bistro" />
+      </noscript>
+   </div>
+   <h2>Bistro Steak</h2>
+   <p>Steak packed fulled of flavors, come visit us to see why one of our signature dishes is always sought after.&nbsp;</p>
+    </picture>    
+  </div>
+
+</body>
+</html>
