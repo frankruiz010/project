@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chipotle | Francisco Ruiz, 2025</title>
+  <script type="text/javascript">
+window.onload = function () {
+	document.getElementById("password1").onchange = validatePassword;
+	document.getElementById("password2").onchange = validatePassword;
+}
+function validatePassword(){
+var pass2=document.getElementById("password2").value;
+var pass1=document.getElementById("password1").value;
+if(pass1!=pass2)
+	document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+else
+	document.getElementById("password2").setCustomValidity('');
+//empty string means no validation error
+}
+</script>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <img src="chi-logo.png" alt="Chipotle Logo">
+      <!-- Optional text can go here too -->
+    </header>
+    <main>
+      <h1>Hello!</h1>
+      <h2>Let's make sure your account information is correct.</h2>
+      <h3>All fields are required unless noted otherwise.</h3>
+      <form action="confirm.html">
+        <section>
+          <div id="salute">
+            <label>Salutation</label>
+            <select name="salutation_txt" required="required" id="salutation_txt">
+              <option value="0" selected="selected">Salutation</option>
+              <option value="1">Mr.</option>
+              <option value="2">Mrs.</option>
+              <option value="3">Miss</option>
+              <option value="4">Ms.</option>
+              <option value="5">None</option>
+            </select>
+          </div>
+          <div id="first">
+            <label>First Name</label>
+            <input name="firstname_txt" type="text" required="required" id="firstname_txt" 
+		    placeholder="First Name">
+          </div>
+          <div id="last">
+            <label>Last Name</label>
+            <input name="lastname_txt" type="text" id="lastname_txt" placeholder="Last Name">
+          </div>
+          <div id="birth">
+            <label>Birthdate</label>
+            <input name="birthdate_txt" type="date" required="required" id="birthdate_txt">
+          </div>
+          <div id="phone">
+            <label>Primary Phone Number</label>
+            <input name="phone_txt" type="tel" required="required" id="phone_txt" placeholder="(000) 123-4567" pattern="[\(][0-9]{3}[\)][\s][0-9]{3}[\-][0-9]{4}">
+          </div>
+          <div id="addy">
+            <label>Address</label>
+            <input name="address_txt" type="text" required="required" id="address_txt" placeholder="Street Address Name">
+          </div>
+          <div id="addy2">
+            <label>Additional Address Info.  (Optional)</label>
+            <input name="address2_txt" type="text" id="address2_txt" placeholder="Enter Apt., Unit or Floor">
+          </div>
+        Content for New section Tag Goes Here</section>
+        <section>
+          <div id="city">
+            <label>City</label>
+              <input name="city.txt" type="text" id="city.txt" placeholder="Enter City">
+          </div>
+          <div id="state">
+            <label>State</label>
+            <select>
+              <option value="0">State</option>
+              <option value="FL">Florida</option>
+              <option value="NY">New York</option>
+              <option value="CA">California</option>
+              </select>
+          </div>
+          <div id="zip">
+            <label>Zip Code</label>
+            <input name="zipcode_txt" type="text" required="required" id="zipcode_txt" placeholder="Zip Code" pattern="[0-9](5)">
+          </div>
+          <div id="email">
+            <label>Email</label>
+            <input name="email_txt" type="text" required="required" id="email_txt" placeholder="you@example.com">
+          </div>
+          <div id="pass1">
+            <label>Password</label>
+            <input name="password1" type="password" required="required" id="password1" placeholder="Must consist of 6-12 uppercase and/or lowercase letters and/or numbers" pattern="[0-9A-Za-z](6,12)">
+          </div>
+          <div id="pass2">
+            <label>Confirm Password</label>
+            <input name="password2" type="text" required="required" id="password2" placeholder="Must match original password">
+          </div>
+          <div id="tandc">
+            <label>I agree to the Terms and Conditions</label>
+            <input name="tandc_txt" type="checkbox" required="required" id="tandc_txt">
+          </div>
+	    </section>
+		  <input name="submit_btn" type="submit" id="submit_btn" value="Join Rewards Program">
+      </form>
+    Content for New main Tag Goes Here</main>
+    <footer>Content for New footer Tag Goes Here</footer>
+  </div>
+</body>
+</html>

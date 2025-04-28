@@ -1,0 +1,75 @@
+/* General page styling (optional) */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ccc;
+}
+
+.wrapper {
+    margin: 0 auto;
+    border-width: 20px;
+    background-color: #fff;
+    width: 100%;
+    display: block;
+}
+
+/* Header and logo styling */
+header {
+    justify-content: center;
+    align-items: center;
+    height: 100px;             /* Size of your header */
+    background-color: #fff;    /* Optional: background color */
+    padding: 20px;
+    border: 20px solid #FF0004;
+}
+
+header img {
+  max-width: 80%;            /* Keeps it responsive */
+  max-height: 100%;          /* Prevents it from overflowing */
+  height: auto;
+  width: auto;
+}
+h1, h2, h3 {
+    margin: 0;
+    text-align: center;
+    font-family: sans-serif;
+    color: #333;
+}
+section {
+    width: 100%;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 16px;
+    margin-right: -4px;
+    vertical-align: top;
+
+
+}
+label {
+    display: block;
+    font-family: sans-serif;
+    padding: 16px;
+    font-size: 12px;
+}
+input, select {
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    width: 90%;
+}
+#tandc_txt {
+    width: auto;
+    margin-top: -24px;
+    margin-left: 16px;
+}
+
+@media (min-width:800px){
+section {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+}
