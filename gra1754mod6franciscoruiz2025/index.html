@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Champs | Francisco Ruiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+  $(document).ready(
+    function() {
+      $('#icon').click (
+        function() {
+          $('#nav').show();
+          $('#icon').hide();
+          $('#x_icon').show();
+        }
+  );
+  $('#x_icon').click (
+    function() {
+          $('#nav').hide();
+          $('#icon').show();
+          $('#x_icon').hide();
+        }
+      );
+    }
+  );
+</script>
+<style type="text/css">
+body {
+    padding: 0;
+    margin: 0;
+    background-color: ccc;
+}
+wrapper {
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+    height: 50px;
+}
+header {
+}
+section {
+}
+#nav {
+    display: none;
+}
+h3 {
+    font-size: 1.5em;
+}
+h2 {
+    font-size: 2.5em;
+}
+footer {
+}
+
+@media (min-width:75em){
+li {
+    display: inline-block;
+}
+#nav {
+    display: block;
+}
+#icon {
+    display: none;
+}
+}
+
+@media (min-width:50em){
+}
+</style>
+</head>
+
+<body>
+<header><img id="icon" src="images/navigation_icon.gif" alt="Navigation icon. Click to expand navigation menu."/> <img id="x_icon" src="images/x_icon.gif" alt="Exit out icon. Click to close navigation menu." style="display: none;" />
+  
+  <nav id="nav" >
+    <ul>
+      <a href="#about" id="about_us_link">
+        <li>About Us</li>
+      </a> <a href="#products" id="products_link">
+          <li>Products</li>
+          </a> <a href="#contact" id="contact_us_link">
+            <li>Contact Us</li>
+            </a>
+    </ul>
+</nav>
+</header>
+<img src="images/champs-logo.png" alt="" width="195" height="195" id="logo">
+
+<wrapper>
+  <section id="about"><img src="images/nike-small.jpeg" alt="" width="350" height="350" id="nike">
+    <h2>About Us</h2>
+    <h3>Founded in the 1980s, Champs Sports became a big name after being started by the company that would be later recognized in the following years as Footlocker. Starting as a specialty store with two other brands by the same company, Champs Sports has become an icon over the decades in sneaker culture, fashion and history. See how our store became recognized with selling top shoe brands like Nike, Reebok and Converse.</h3>
+  </section>
+  <section id="products"><img src="images/adidas-small.jpeg" alt="" width="350" height="350" id="adidas">
+    <h2>Products</h2>
+    <h3>Explore the endless amount of sneaker designs that come from top named brands around the world and has shaped our lives (and feet) for a better tomorrow.</h3>
+  </section>
+  <section id="contact"><img src="images/puma-small.jpeg" alt="" width="350" height="350" id="puma">
+    <h2>Contact Us</h2>
+    <h3>Have any questions about our footwear or apparel? Feel free to reach us, as our staff around the world are prepared and passionate to talk about the products you want answers to.</h3>
+    <footer>© 2025, Francisco Ruiz
+      This is a fictitious web page created solely for the purpose of education and training. All products and people associated with this web page are also fictitious. Any resemblance to real brands, products, or people is purely coincidental. Information provided about the product is also fictitious and should not be construed to be representative of actual products on the market in a similar product category.</footer>
+  </section>
+</wrapper>
+</body>
+</html>
